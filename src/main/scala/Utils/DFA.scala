@@ -3,7 +3,7 @@ package Utils
 object DFA {
   val initialState = 0
   val states: List[Int] = (0 to 10).toList
-  val finalStates = List(1, 2, 3)
+  val finalStates = List(1, 2, 3, 4, 5, 6, 10)
   val transitions: Map[(Int, Char), Int] =
     Language.operators.map(x => (0, x) -> 4).toMap ++
       Language.delimitator.map(x => (0, x) -> 6) ++
@@ -22,16 +22,8 @@ object DFA {
         (9, Language.slash) -> 10
       )
 
-
-  private def delta(state: Int, symbol: Char): Either[Boolean, Int] = {
-    transitions.get(state, symbol) match {
-      case Some(nextState) => Right(nextState)
-      case None => Left(false)
-    }
+  private def delta(state: Int, symbol: Char): Option[Int] = {
+    transitions.get(state, symbol)
   }
-
- /* def checkInput(input: String) = {
-    input.map(x => delta(initialState, x))
-  }*/
 
 }
