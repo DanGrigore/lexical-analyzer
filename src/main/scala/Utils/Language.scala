@@ -13,7 +13,7 @@ object Language {
 
   //TODO: add EOF (when you dont have a string anymore, add EOF)
   val delimitator: List[Char] = List(';', '{', '}')
-  val specialCharacters: List[Char] = List('\n', '\t')
+  val specialCharacters: List[Char] = List('\n', '\t') //TODO: update list of special chars like \\ , \", \', etc
   val quotation_mark: Char = '"'
   val endLine: Char = '\n'
   val star: Char = '*'
@@ -22,10 +22,13 @@ object Language {
   val apostrophe: Char = '\''
   val point: Char = '.'
   val identifiers: Set[Char] = characters ++ numbers
-  val notstar: Set[Char] = identifiers ++ operators.filter(_ != star) ++ List(space, quotation_mark, apostrophe) ++ specialCharacters
-  val notslash: Set[Char] = identifiers ++ operators.filter(_ != slash) ++ List(space, quotation_mark, apostrophe) ++ specialCharacters
+  val notstar: Set[Char] = identifiers ++ operators.filter(_ != star) ++ List(space, quotation_mark, apostrophe) ++
+    delimitator ++ specialCharacters
+  val notslash: Set[Char] = identifiers ++ operators.filter(_ != slash) ++ List(space, quotation_mark, apostrophe) ++
+    delimitator ++ specialCharacters
 
   val doubleOperators: Set[Char] = Set('&', '|', '<', '>', '+', '-', '=')
-  val allLanguage: Set[Char] = identifiers ++ delimitator ++ List(star, slash, space, quotation_mark, apostrophe) ++ specialCharacters
+  val allLanguage: Set[Char] = identifiers ++ delimitator ++ List(star, slash, space, quotation_mark, apostrophe) ++
+    operators ++ specialCharacters
 
 }

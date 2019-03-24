@@ -17,8 +17,8 @@ object Analyzer {
   case class Token(value: Int, ofType: Int)
 
   //TODO: fa float + baga stare in dfa
-  val tokenTypes: List[String] = List("identifier", "operator", "keyword", "delimitator", "punctuation mark", "number constants",
-    "string constatnts", "char constants", "space", "comment", "special character", "float constant")
+  val tokenTypes: List[String] = List("identifier", "operator", "keyword", "delimitator", "punctuation mark",
+    "number constants", "string constatnts", "char constants", "space", "comment", "special character", "float constant")
   val IDENTIFIER: Int = 0
   val OPERATOR: Int = 1
   val KEYWORD: Int = 2
@@ -50,7 +50,8 @@ object Analyzer {
 
 
   @tailrec
-  def generate(remainingCode: String, action: String, visitedStates: List[StateChar], tokens: List[Token]): List[Token] = {
+  def generate(remainingCode: String, action: String, visitedStates: List[StateChar], tokens: List[Token])
+  : List[Token] = {
     remainingCode match {
       case "" => tokens ++ getTokken(createString(visitedStates), visitedStates.last.state)
       case string: String =>
@@ -64,22 +65,17 @@ object Analyzer {
             }
 
             val nextString = if (nexttAction == nextAction(BLOCKED_IDX)) string else string.tail
-            val nextVisitedState: List[StateChar] = if (nexttAction == nextAction(BLOCKED_IDX)) visitedStates else visitedStates ++ List(StateChar(nextState, string.head))
+            val nextVisitedState: List[StateChar] =
+              if (nexttAction == nextAction(BLOCKED_IDX)) visitedStates
+              else visitedStates ++ List(StateChar(nextState, string.head))
             generate(nextString, nexttAction, nextVisitedState, tokens)
           case "blocked" =>
-            //            val tokenToAdd: Option[Token] =
-            //              if (dfa.finalStates.contains(visitedStates.last.state))
-            //                getTokken(createString(visitedStates), visitedStates.last.state)
-            //              else None
-            //            generate(string, nextAction(CONTINUE_IDX), List(StateChar(0, ' ')), tokens ++ tokenToAdd)
             generate(string, nextAction(CONTINUE_IDX), List(StateChar(0, ' ')),
               tokens ++ getTokken(createString(visitedStates), visitedStates.last.state))
           case "succes" => tokens
           case "error" => tokens
         }
     }
-    //TODO: cand dau getTokken, ofer inputString-ul si starea finala in care s-a oprit pentru a afla ce fel de tokken este
-    // cand creem mergem in stare si daca nu mai avem continuare = blocked = identificator nou
   }
 
   //Map of token(string) and type which is determined by final state
@@ -107,11 +103,12 @@ object Analyzer {
       case _ => -1 //fails
     }
 
+    //TODO: see what you do when the final state is -1 //fails
     if (ofType == IDENTIFIER)
       if (Language.keyWords.contains(input.tail))
         ofType = KEYWORD
     if (ofType == OPERATOR)
-      if(tokenTableOfStrings.contains(" \\n") && input.contains("\n"))
+      if (tokenTableOfStrings.contains(" \\n") && input.contains("\n"))
         ofType = SPECIAL_CHARACTER
 
     Some(Token(indexOfInput, ofType))
