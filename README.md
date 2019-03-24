@@ -1,3 +1,3 @@
 # lexical-analyzer
 
-<img src="dfa.PNG" alt="schema"/>
+<img src="new_dfa.png"/>
