@@ -4,11 +4,9 @@ import scala.io.Source
 
 class Scanner {
   private val bufferedSource = Source.fromFile("input.txt")
-  val lines: String = bufferedSource mkString
-  /* val lines = Source.fromFile("/Users/Al/.bash_profile").getLines.toList */
-  /* val fileContents = Source.fromFile(filename).getLines.mkString */
+  private val lines: String = bufferedSource mkString
 
-  def returnLines: String = lines
+  def getLines: String = lines
 
   def close(): Unit = bufferedSource.close()
 

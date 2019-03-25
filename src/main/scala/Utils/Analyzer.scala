@@ -3,34 +3,29 @@ package Utils
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 
-/**
-  * ignore white spaces and comments
-  */
 object Analyzer {
   private val dfa = DFA
 
   /**
-    *
     * @param value  position in tokenTableOfStrings of that string
     * @param ofType position in tokenTypes of the type of the tokken
     */
   case class Token(value: Int, ofType: Int)
 
-  //TODO: fa float + baga stare in dfa
-  val tokenTypes: List[String] = List("identifier", "operator", "keyword", "delimitator", "punctuation mark",
-    "number constants", "string constatnts", "char constants", "space", "comment", "special character", "float constant")
-  val IDENTIFIER: Int = 0
-  val OPERATOR: Int = 1
-  val KEYWORD: Int = 2
-  val DELIMITATOR: Int = 3
-  val PUNCTATION_MARK: Int = 4
-  val NUMBER_CONSTANTS: Int = 5
-  val STRING_CONSTANNTS: Int = 6
-  val CHAR_CONSTANTS: Int = 7
-  val SPACES: Int = 8
-  val COMMENT: Int = 9
-  val SPECIAL_CHARACTER: Int = 10
-  val FLOAT_CONSTANT: Int = 11
+  val tokenTypes: List[String] = List("error", "identifier", "operator", "keyword", "delimitator", "punctuation mark",
+    "number constant", "string constatnt", "char constant", "space", "comment", "special character")
+  val ERROR: Int = 0
+  val IDENTIFIER: Int = 1
+  val OPERATOR: Int = 2
+  val KEYWORD: Int = 3
+  val DELIMITATOR: Int = 4
+  val PUNCTATION_MARK: Int = 5
+  val NUMBER_CONSTANT: Int = 6
+  val STRING_CONSTANT: Int = 7
+  val CHAR_CONSTANTS: Int = 8
+  val SPACES: Int = 9
+  val COMMENT: Int = 10
+  val SPECIAL_CHARACTER: Int = 11
 
   val tokenTableOfStrings: ListBuffer[String] = ListBuffer() // add all words that were created
 
@@ -47,7 +42,6 @@ object Analyzer {
       chars => chars.char
     }.mkString
   }
-
 
   @tailrec
   def generate(remainingCode: String, action: String, visitedStates: List[StateChar], tokens: List[Token])
@@ -72,8 +66,7 @@ object Analyzer {
           case "blocked" =>
             generate(string, nextAction(CONTINUE_IDX), List(StateChar(0, ' ')),
               tokens ++ getTokken(createString(visitedStates), visitedStates.last.state))
-          case "succes" => tokens
-          case "error" => tokens
+
         }
     }
   }
@@ -89,21 +82,24 @@ object Analyzer {
 
     var ofType: Int = finalState match {
       case 1 => IDENTIFIER
-      case 2 => NUMBER_CONSTANTS
+      case 2 => NUMBER_CONSTANT
       case 3 => OPERATOR
       case 4 => OPERATOR
       case 5 => SPACES
       case 6 => DELIMITATOR
       case 10 => COMMENT
-      case 11 => STRING_CONSTANNTS
+      case 11 => STRING_CONSTANT
       case 13 => COMMENT
       case 14 => OPERATOR
       case 17 => CHAR_CONSTANTS
-      case 19 => FLOAT_CONSTANT
-      case _ => -1 //fails
+      case 19 => NUMBER_CONSTANT
+      case 20 => NUMBER_CONSTANT
+      case 21 => NUMBER_CONSTANT
+      case 23 => NUMBER_CONSTANT
+      case 24 => OPERATOR
+      case _ => ERROR //not a final state = fails
     }
 
-    //TODO: see what you do when the final state is -1 //fails
     if (ofType == IDENTIFIER)
       if (Language.keyWords.contains(input.tail))
         ofType = KEYWORD
@@ -114,12 +110,15 @@ object Analyzer {
     Some(Token(indexOfInput, ofType))
   }
 
-  def printTokens(tokens: List[Token]): Unit = {
-    tokens.foreach {
+  def printTokens(tokens: List[Token]): String = {
+    val returnString = tokens.filter(token => token.ofType != SPACES /* && token.ofType != COMMENT*/).map {
       token =>
-        if (token.ofType != SPACES /* && token.ofType != COMMENT */ )
-          println(tokenTableOfStrings(token.value) + " - " + tokenTypes(token.ofType))
-    }
+        tokenTableOfStrings(token.value) + " - " + tokenTypes(token.ofType) + '\n'
+    }.mkString
+
+    if(returnString.contains("error"))
+      returnString.split("error")(0) + "error"
+    else returnString
   }
 
 }
