@@ -1,5 +1,9 @@
 import scala.collection.mutable.ListBuffer
 
+val listttt = List(1, 2, 3, 4, 5)
+
+listttt.map(x => x + " ").mkString
+
 val x = ('1' to '9').toSet
 
 val operators: List[Char] = List(',', '<', '>', '.', '_', '(', ')', ';', '$', ':', '%', '[', ']', '#',
@@ -51,7 +55,7 @@ val list3 = List(rht(1, 2), rht(1, 2))
 
 list3(list3.length - 2)
 val nn = "do {tiparire(\"suma=%d\\n\",s += f( i++ ));\n}while (i<10);"
-if (nn.contains("\n") )println("ds")
+if (nn.contains("\n")) println("ds")
 
 val keyWords: List[String] = List("auto", "break", "case", "char", "const", "continue", "default", "do", "double",
   "else", "enum", "extern", "float", "for", "goto", "if", "int", "long", "register", "return", "short", "'signed",
@@ -59,7 +63,9 @@ val keyWords: List[String] = List("auto", "break", "case", "char", "const", "con
 
 keyWords.contains("break2")
 
-val string2 =" \\\\n"
+val string2 = " \\\\n"
 string2.tail
-val listOfChars:List[Char] = List('\n', '\t')
-val stringlist =( listOfChars mkString) contains(string2.tail)
+val listOfChars: List[Char] = List('\n', '\t')
+val stringlist = (listOfChars mkString) contains (string2.tail)
+
+listOfChars(1)
