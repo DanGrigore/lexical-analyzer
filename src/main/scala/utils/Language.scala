@@ -1,4 +1,4 @@
-package Utils
+package utils
 
 object Language {
   val keyWords: List[String] = List("auto", "break", "case", "char", "const", "continue", "default", "do", "double",

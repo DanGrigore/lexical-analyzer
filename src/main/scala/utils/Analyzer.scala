@@ -1,4 +1,4 @@
-package Utils
+package utils
 
 import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer

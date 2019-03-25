@@ -1,4 +1,4 @@
-import Utils.{Analyzer, Scanner, Writter}
+import utils.{Analyzer, Scanner, Writter}
 
 object Boot extends App {
   val scanner = new Scanner

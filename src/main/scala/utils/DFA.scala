@@ -1,4 +1,4 @@
-package Utils
+package utils
 
 object DFA {
   val initialState = 0
