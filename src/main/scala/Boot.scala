@@ -1,12 +1,17 @@
-import Utils.{Analyzer, Scanner}
+import Utils.{Analyzer, Scanner, Writter}
 
 object Boot extends App {
   val scanner = new Scanner
-  val inputCode = scanner.lines
+  val writter = new Writter
+
+  val inputCode = scanner.getLines
   val tokens = Analyzer.generate(inputCode, Analyzer.nextAction(Analyzer.CONTINUE_IDX), List(Analyzer.StateChar(0, ' ')), Nil)
 
-  //println(tokens)
-  //println(Analyzer.tokenTableOfStrings)
-  Analyzer.printTokens(tokens)
+  val output = Analyzer.printTokens(tokens)
+
+  println(output)
+  writter.printInFile(output)
+
+  writter.close()
   scanner.close()
 }
