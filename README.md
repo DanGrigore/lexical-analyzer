@@ -1,4 +1,4 @@
-# lexical-analyzer
+# C Lexical analyzer
 
 This is a lexical analyzer for C language written in scala. This is based on the following DFA (deterministic finite automaton):
  - Q (finite set of states): {1, 2, 3,..., 19}
