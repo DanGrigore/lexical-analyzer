@@ -10,8 +10,10 @@ This is a lexical analyzer for C language written in scala. This is based on the
  
  * lit = all letters
  * cif = all digits
- * op = operators
+ * op = all operators without doubleOp
  * allLang = Σ
+ * doubleOp = {&, |, <, >, +, -, =, *}
+ * hexLit = numbers and {a,..., f, A,..., F}
  
  
 <img src="new_dfa.png"/>
