@@ -118,7 +118,7 @@ object Analyzer {
 
     if(returnString.contains("error"))
       returnString.split("error")(0) + "error"
-    else returnString
+    else returnString + "EOF"
   }
 
 }
