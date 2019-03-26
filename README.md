@@ -15,5 +15,5 @@ This is a lexical analyzer for C language written in scala. This is based on the
  * doubleOp = {&, |, <, >, +, -, =, *}
  * hexLit = numbers and {a,..., f, A,..., F}
  
- 
+ tool used for creating the dfa: http://madebyevan.com/fsm/
 <img src="new_dfa.png"/>
